@@ -1,0 +1,4 @@
+this is new text shit idk about but try opening (cmd) and then type: arp -a
+
+
+:>
