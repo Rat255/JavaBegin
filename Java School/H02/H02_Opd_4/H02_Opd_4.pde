@@ -2,6 +2,7 @@ size(840,840);
 
 background(150,85,200);
 
+textSize(30);
 fill(255,0,0);
 text("funi",420,420);
 
