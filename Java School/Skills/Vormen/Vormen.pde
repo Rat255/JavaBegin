@@ -1,7 +1,7 @@
 size(1400,720);
 background(255,255,255);
 
-strokeWeight(5); 
+strokeWeight(4); 
 textSize(30);
 
 //Lijn
@@ -59,3 +59,4 @@ text("Afgeronde rechthoek",170,630);
 text("Gevulde ovaal",660,630);
 text("Gevulde rechthoek met ovaal",560,380);
 text("Taartpunt met ovaal eromheen",990,380);
+text("Cirkel",1145,630);

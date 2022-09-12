@@ -1,4 +1,4 @@
-float gewicht = 49;
+float gewicht = 51;
 float lengte = 1.68;
 float leeftijd = 16;
 float BMI = 0;
@@ -6,6 +6,9 @@ float BMI = 0;
 size(780,300);
 
 BMI = gewicht / (lengte * lengte);
+BMI *= 10;
+BMI = round(BMI);
+BMI /= 10;
 
 textSize(20);
 if(BMI <= 16){
