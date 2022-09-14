@@ -11,7 +11,7 @@ void setup(){
 }
 
 void draw(){
-  background(255,255,255);
+  background(200);
   
   xWaarde+=speedx;
   yWaarde+=speedy;
