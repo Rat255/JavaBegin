@@ -24,7 +24,10 @@ void draw(){
   fill(0);
   textSize(20);
   
-  if(keer >= 101){
+  
+  if(keer >= 140){
+    text(".",200,160);
+  }else if(keer >= 101){
     text("okay thats to far bro.",200,160);
   }else if(keer >= 90){
     text(":<",200,160);
@@ -41,6 +44,8 @@ void draw(){
   }else if(keer >= 1){
     text("ok",200,160);
   }
+  
+  text(keer,10,490);
 }
 void Knop1(){
   
