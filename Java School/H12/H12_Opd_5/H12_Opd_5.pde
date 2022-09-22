@@ -1,7 +1,7 @@
-int size = 10;
+int size = 5;
 
 void setup(){
-  size(1200,800);
+  size(1920,1080);
   background(255);
   frameRate(60);
 }
