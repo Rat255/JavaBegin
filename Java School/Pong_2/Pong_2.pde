@@ -2,11 +2,13 @@
 
 import processing.sound.*;
 
-SoundFile EnemyHit;
+SoundFile music;
 
-SoundFile PlayerHit;
+PImage img;
+PImage sad;
+PImage happy;
 
-float botAC = 1.15;
+float botAC = 1.19;
 
 int radius = 10;
 
@@ -15,7 +17,7 @@ int BallSize = 20;
 float xWaarde = 750/2, yWaarde = 400/2;
 
 float enemySpeed;
-float Xspeed = 2, Yspeed = 3;
+float Xspeed = 3, Yspeed = 3;
 int PlayerScore, EnemyScore;
 float xPlayer, yPlayer, wPlayer, hPlayer;
 float xEnemy, yEnemy, wEnemy, hEnemy;
@@ -28,31 +30,40 @@ void setup(){
   size(750,400);
   frameRate(90);
   
-  EnemyHit = new SoundFile(this, "EnemyHit");
-  PlayerHit = new SoundFile(this, "PlayerHit");
+  img = loadImage("Anime2.png");
+  sad = loadImage("sad.jpg");
+  happy = loadImage("happy.jpg");
   
+  happy.resize(758,514);
   
+  music = new SoundFile(this, "Le Gang - I Don't Need U 2 Say Anything.mp3");
+  music.amp(0.05);
+  music.play();
   
   StartScreen();
   EndScreen();
-  enemyplayer();
-  player1();
-  Ball();
+  
+  
 }
 
 void draw(){
   background(0);
+  
+  image(img,xWaarde/20-650,yWaarde/20-300);
  
   textSize(30);
   
-  text(EnemyScore,700,50);
-  text(PlayerScore,50,50);
- 
-  player1();
-  Ball();
-  enemyplayer();
+  text(EnemyScore,600,50);
+  text(PlayerScore,150,50);
   
   StartScreen();
+   
+  if(start) return;
+   
+  player1();
+  enemyplayer();
+  Ball();
+  
   EndScreen();
 }
 
@@ -63,7 +74,7 @@ void keyPressed(){
 }
 
 void enemyplayer(){
-  
+  fill(255);
   noStroke();
   
   xEnemy = width - 40;
@@ -71,16 +82,21 @@ void enemyplayer(){
   wEnemy = 20;
   hEnemy = 60;
   
- rect(xEnemy,yEnemy,wEnemy,hEnemy,radius);
-  if(xWaarde >= 475){
+  rect(xEnemy,yEnemy,wEnemy,hEnemy,radius);
+
+  //enemySpeed = yWaarde * botAC;
+  
+  rect(xEnemy,yEnemy,wEnemy,hEnemy,radius);
+  if(xWaarde > 400){
   enemySpeed = yWaarde * botAC;
-  }else if(xWaarde <= 475){
+  }else if(xWaarde <= 400){
   enemySpeed = 200;
   }
-}
+ }
+   
 
 void player1(){
-  
+  fill(255);
   noStroke();
   
   xPlayer = 20;
@@ -91,7 +107,7 @@ void player1(){
 }
 
 void Ball(){
-  
+  fill(255);
   noStroke();
   
   xWaarde += Xspeed;
@@ -126,7 +142,7 @@ void Ball(){
     Yspeed = -Yspeed;
     
   }
-  
+  Yspeed += 0.02;
 }
 
 void StartScreen(){
@@ -134,27 +150,34 @@ void StartScreen(){
   if(start == true){
   background(0);
   fill(255);
-  textSize(90);
-    
-  text("Pong!",270,150);
-  }else if(start == false){
-    
-    
+  
+  textSize(80);
+  text("PONG",275,180);
+  
+  stroke(255);
+  noFill();
+  strokeWeight(5);
+  rect(275,120,200,70,10);
+  
+  textSize(20);
+  text("press space to start",290,290);
   }
-
 }
 
 void EndScreen(){
 
   if(PlayerScore == 10){
     background(0,255,10);
+    image(happy,0,0);
+    
     textSize(90); fill(255); noStroke();
-    text("Winner",240,150);
+    text("Winner",240,200);
     noLoop();
   }else if(EnemyScore == 10){
     background(255,10,0);
+    image(sad,0,0);
     textSize(90); fill(255); noStroke();
-    text("Defeated",220,150);
+    text("Defeated",220,200);
     noLoop();
   }
 
