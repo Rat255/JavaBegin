@@ -4,20 +4,22 @@ import processing.sound.*;
 
 SoundFile music;
 
+float Gravity = 0.08;
+
 PImage img;
 PImage sad;
 PImage happy;
 
-float botAC = 1.19;
+float botAC = 1.5;
 
 int radius = 10;
 
-int BallSize = 20;
+int BallSize = 30;
 
 float xWaarde = 750/2, yWaarde = 400/2;
 
 float enemySpeed;
-float Xspeed = 3, Yspeed = 3;
+float Xspeed = 5, Yspeed = 7;
 int PlayerScore, EnemyScore;
 float xPlayer, yPlayer, wPlayer, hPlayer;
 float xEnemy, yEnemy, wEnemy, hEnemy;
@@ -27,14 +29,14 @@ float playerposition = xPlayer+  yPlayer;
 boolean start = true;
 
 void setup(){
-  size(750,400);
   frameRate(90);
-  
+  fullScreen();
   img = loadImage("Anime2.png");
   sad = loadImage("sad.jpg");
   happy = loadImage("happy.jpg");
   
-  happy.resize(758,514);
+  img.resize(1920*2,1080*2);
+  happy.resize(758*4,514*4);
   
   music = new SoundFile(this, "Le Gang - I Don't Need U 2 Say Anything.mp3");
   music.amp(0.05);
@@ -49,12 +51,12 @@ void setup(){
 void draw(){
   background(0);
   
-  image(img,xWaarde/20-650,yWaarde/20-300);
+  //image(img,xWaarde/20-600,yWaarde/20-400);
  
-  textSize(30);
+  textSize(90);
   
-  text(EnemyScore,600,50);
-  text(PlayerScore,150,50);
+  text(EnemyScore,width - 550,100);
+  text(PlayerScore,550,100);
   
   StartScreen();
    
@@ -77,20 +79,20 @@ void enemyplayer(){
   fill(255);
   noStroke();
   
-  xEnemy = width - 40;
+  xEnemy = width - 50;
   yEnemy = - 30 + enemySpeed;
-  wEnemy = 20;
-  hEnemy = 60;
+  wEnemy = 30;
+  hEnemy = 150;
   
   rect(xEnemy,yEnemy,wEnemy,hEnemy,radius);
 
   //enemySpeed = yWaarde * botAC;
   
   rect(xEnemy,yEnemy,wEnemy,hEnemy,radius);
-  if(xWaarde > 400){
-  enemySpeed = yWaarde * botAC;
-  }else if(xWaarde <= 400){
-  enemySpeed = 200;
+  if(xWaarde > width - 400){
+  enemySpeed = yWaarde - 75 * botAC;
+  }else if(xWaarde <= width - 400){
+  enemySpeed = height / 2;
   }
  }
    
@@ -100,9 +102,9 @@ void player1(){
   noStroke();
   
   xPlayer = 20;
-  yPlayer = mouseY - 30;
-  wPlayer = 20;
-  hPlayer = 60;
+  yPlayer = mouseY - 75;
+  wPlayer = 30;
+  hPlayer = 150;
   rect(xPlayer,yPlayer,wPlayer,hPlayer,radius);
 }
 
@@ -117,32 +119,34 @@ void Ball(){
   
   
   
-  if(xWaarde >= width){
-    xWaarde = 750/2;
+  if(xWaarde > width){
+    xWaarde = width/2;
+    yWaarde = height/2;
     PlayerScore++;
   }else if(xWaarde > xEnemy && xWaarde < xEnemy + wEnemy && yWaarde > yEnemy && yWaarde < yEnemy + hEnemy){
     Xspeed = -Xspeed;
   }
   
   
-    if(xWaarde <= 0){
-    xWaarde = 750/2;
+    if(xWaarde < 0){
+    xWaarde = width/2;
+    yWaarde = height/2;
     EnemyScore++;
    }else if(xWaarde > xPlayer && xWaarde < xPlayer + wPlayer + 10 && yWaarde > yPlayer && yWaarde < yPlayer + hPlayer){
     Xspeed = -Xspeed;
   }
   
+    if(yWaarde > height){
+    Yspeed = -Yspeed;
+    
+  }
+    if(yWaarde < 0){
+    Yspeed = -Yspeed;
+    
+  }
   
-
-    if(yWaarde >= height){
-    Yspeed = -Yspeed;
-    
-  }
-    if(yWaarde <= 0){
-    Yspeed = -Yspeed;
-    
-  }
-  Yspeed += 0.02;
+  Yspeed += Gravity;
+  
 }
 
 void StartScreen(){
@@ -152,15 +156,18 @@ void StartScreen(){
   fill(255);
   
   textSize(80);
-  text("PONG",275,180);
+  
+  var offset = textWidth("PONG") / 2;
+  text("PONG",((width / 2) - offset),480);
   
   stroke(255);
   noFill();
   strokeWeight(5);
-  rect(275,120,200,70,10);
+  rect((width / 2) - offset,420,200,70,10);
   
   textSize(20);
-  text("press space to start",290,290);
+  var offset2 = textWidth("press space to start") / 2;
+  text("press space to start",((width / 2) - offset2),590);
   }
 }
 
@@ -168,16 +175,19 @@ void EndScreen(){
 
   if(PlayerScore == 10){
     background(0,255,10);
-    image(happy,0,0);
+    //image(happy,0,0);
     
     textSize(90); fill(255); noStroke();
-    text("Winner",240,200);
+    var offset3 = textWidth("Winner") / 2;
+    text("Winner",((width / 2) - offset3),500);
     noLoop();
   }else if(EnemyScore == 10){
     background(255,10,0);
-    image(sad,0,0);
+    //image(sad,0,0);
+    
     textSize(90); fill(255); noStroke();
-    text("Defeated",220,200);
+    var offset4 = textWidth("Defeated") / 2;
+    text("Defeated",((width / 2) - offset4),500);
     noLoop();
   }
 
