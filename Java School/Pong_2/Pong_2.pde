@@ -1,18 +1,24 @@
-//pong!
+//pong! VwC
 
 import processing.sound.*;
 
 SoundFile music;
 
+
+//Game Settings======================================
+
 float Gravity = 0.08;
 
 int maxScore = 10;
 
+float botAC = 1.45;
+
+
+//Int's======================================
+
 PImage img;
 PImage sad;
 PImage happy;
-
-float botAC = 1.45;
 
 int radius = 20;
 
@@ -34,7 +40,8 @@ boolean start = true;
 boolean win = false;
 boolean lose = false;
 
-//======================================
+
+//Setup======================================
 
 void setup(){
   frameRate(90);
@@ -52,12 +59,19 @@ void setup(){
   
 
 }
-//======================================
+
+
+//Draw======================================
+
 void draw(){
   StartScreen();
   
   if(start) return;
-  
+
+
+
+//GameScreen====================================== 
+
   if(gameState == 1){
   background(0);
   
@@ -72,16 +86,26 @@ void draw(){
   enemyplayer();
   Ball();
   }
+
+
+//Screen2====================================== 
+
   EndScreen();
 }
-//======================================
+
+
+//Key======================================
+
 void keyPressed(){
   if(keyCode == 32){
     start = false; 
     gameState = 1;
   }
 }
-//======================================
+
+
+//AI======================================
+
 void enemyplayer(){
   fill(255);
   noStroke();
@@ -93,7 +117,8 @@ void enemyplayer(){
   
   rect(xEnemy,yEnemy,wEnemy,hEnemy,radius);
 
-  //enemySpeed = yWaarde * botAC;
+
+//enemySpeed = yWaarde * botAC;
   
   rect(xEnemy,yEnemy,wEnemy,hEnemy,radius);
   if(xWaarde > width - 400){
@@ -103,7 +128,9 @@ void enemyplayer(){
   }
  }
    
-//======================================
+
+//P1======================================
+
 void player1(){
   fill(255);
   noStroke();
@@ -114,7 +141,10 @@ void player1(){
   hPlayer = 150;
   rect(xPlayer,yPlayer,wPlayer,hPlayer,radius);
 }
-//======================================
+
+
+//Ball======================================
+
 void Ball(){
   fill(255);
   noStroke();
@@ -125,8 +155,7 @@ void Ball(){
   Xspeed *= 1.0004;
   
   ellipse(xWaarde,yWaarde,BallSize,BallSize);
-  
-  
+    
   
   if(xWaarde > width){
     xWaarde = width/2;
@@ -159,7 +188,10 @@ void Ball(){
   Yspeed += Gravity;
   
 }
-//======================================
+
+
+//Screen 1======================================
+
 void StartScreen(){
   
   if(start == true){
@@ -181,19 +213,28 @@ void StartScreen(){
   text("press space to start",((width / 2) - offset2),590);
   }
 }
-//======================================
+
+
+//Screen 2======================================
+
 void EndScreen(){
   if(PlayerScore == maxScore || EnemyScore == maxScore){
     background(0,255,10);
     //image(happy,0,0);
     
-    textSize(90); fill(255); noStroke();
-    var offset3 = textWidth("Winner") / 2;
-    text("Winner",((width / 2) - offset3),500);
+      textSize(90); fill(255); noStroke();
+      var offset3 = textWidth("Winner") / 2;
+      text("Winner",((width / 2) - offset3),500);
+      textSize(20);
+      var offset5 = textWidth("press space to continue") / 2;
+      text("press space to continue",((width / 2) - offset5),590);
     if(EnemyScore == maxScore){
        background(255,10,0);
+       textSize(90); fill(255); noStroke();
        var offset4 = textWidth("Defeated") / 2;
        text("Defeated",((width / 2) - offset4),500);
+       textSize(20);
+       text("press space to continue",((width / 2) - offset5),590);
     }
     
     
