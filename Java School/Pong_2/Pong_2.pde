@@ -4,17 +4,21 @@ import processing.sound.*;
 
 SoundFile music;
 
-float Gravity = 0;
+float Gravity = 0.08;
+
+int maxScore = 10;
 
 PImage img;
 PImage sad;
 PImage happy;
 
-float botAC = 1.5;
+float botAC = 1.35;
 
-int radius = 10;
+int radius = 20;
 
 int BallSize = 30;
+
+int gameState = 1;
 
 float xWaarde = 750/2, yWaarde = 400/2;
 
@@ -27,6 +31,9 @@ float xEnemy, yEnemy, wEnemy, hEnemy;
 float playerposition = xPlayer+  yPlayer;
 
 boolean start = true;
+boolean win = false;
+boolean lose = false;
+
 
 void setup(){
   frameRate(90);
@@ -42,13 +49,15 @@ void setup(){
   music.amp(0.05);
   music.play();
   
-  StartScreen();
-  EndScreen();
-  
-  
+
 }
 
 void draw(){
+  StartScreen();
+  
+  if(start) return;
+  
+  if(gameState == 1){
   background(0);
   
   image(img,0,0);
@@ -56,25 +65,22 @@ void draw(){
   textSize(90);
   
   text(EnemyScore,width - 550,100);
-  text(PlayerScore,550,100);
-  
-  StartScreen();
-   
-  if(start) return;
+  text(PlayerScore,550,100);    
    
   player1();
   enemyplayer();
   Ball();
-  
+  }
   EndScreen();
 }
-
+//======================================
 void keyPressed(){
   if(keyCode == 32){
     start = false; 
+    gameState = 1;
   }
 }
-
+//======================================
 void enemyplayer(){
   fill(255);
   noStroke();
@@ -172,23 +178,22 @@ void StartScreen(){
 }
 
 void EndScreen(){
-
-  if(PlayerScore == 10){
+  if(PlayerScore == maxScore || EnemyScore == maxScore){
     background(0,255,10);
     //image(happy,0,0);
     
     textSize(90); fill(255); noStroke();
     var offset3 = textWidth("Winner") / 2;
     text("Winner",((width / 2) - offset3),500);
-    noLoop();
-  }else if(EnemyScore == 10){
-    background(255,10,0);
-    //image(sad,0,0);
+    if(EnemyScore == maxScore){
+       background(255,10,0);
+       var offset4 = textWidth("Defeated") / 2;
+       text("Defeated",((width / 2) - offset4),500);
+    }
     
-    textSize(90); fill(255); noStroke();
-    var offset4 = textWidth("Defeated") / 2;
-    text("Defeated",((width / 2) - offset4),500);
-    noLoop();
+    
+    EnemyScore = 0;
+    PlayerScore = 0;
+    gameState = 0;
   }
-
-}
+}  
