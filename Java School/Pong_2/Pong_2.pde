@@ -4,7 +4,7 @@ import processing.sound.*;
 
 SoundFile music;
 
-float Gravity = 0.08;
+float Gravity = 0;
 
 PImage img;
 PImage sad;
@@ -35,7 +35,7 @@ void setup(){
   sad = loadImage("sad.jpg");
   happy = loadImage("happy.jpg");
   
-  img.resize(1920*2,1080*2);
+
   happy.resize(758*4,514*4);
   
   music = new SoundFile(this, "Le Gang - I Don't Need U 2 Say Anything.mp3");
@@ -51,7 +51,7 @@ void setup(){
 void draw(){
   background(0);
   
-  //image(img,xWaarde/20-600,yWaarde/20-400);
+  image(img,0,0);
  
   textSize(90);
   
