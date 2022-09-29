@@ -12,7 +12,7 @@ PImage img;
 PImage sad;
 PImage happy;
 
-float botAC = 1.35;
+float botAC = 1.45;
 
 int radius = 20;
 
@@ -23,7 +23,7 @@ int gameState = 1;
 float xWaarde = 750/2, yWaarde = 400/2;
 
 float enemySpeed;
-float Xspeed = 5, Yspeed = 7;
+float Xspeed = 9, Yspeed = 6;
 int PlayerScore, EnemyScore;
 float xPlayer, yPlayer, wPlayer, hPlayer;
 float xEnemy, yEnemy, wEnemy, hEnemy;
@@ -34,6 +34,7 @@ boolean start = true;
 boolean win = false;
 boolean lose = false;
 
+//======================================
 
 void setup(){
   frameRate(90);
@@ -51,7 +52,7 @@ void setup(){
   
 
 }
-
+//======================================
 void draw(){
   StartScreen();
   
@@ -102,7 +103,7 @@ void enemyplayer(){
   }
  }
    
-
+//======================================
 void player1(){
   fill(255);
   noStroke();
@@ -113,13 +114,15 @@ void player1(){
   hPlayer = 150;
   rect(xPlayer,yPlayer,wPlayer,hPlayer,radius);
 }
-
+//======================================
 void Ball(){
   fill(255);
   noStroke();
   
   xWaarde += Xspeed;
   yWaarde += Yspeed;
+  
+  Xspeed *= 1.0004;
   
   ellipse(xWaarde,yWaarde,BallSize,BallSize);
   
@@ -128,6 +131,7 @@ void Ball(){
   if(xWaarde > width){
     xWaarde = width/2;
     yWaarde = height/2;
+    Xspeed = 9;
     PlayerScore++;
   }else if(xWaarde > xEnemy && xWaarde < xEnemy + wEnemy && yWaarde > yEnemy && yWaarde < yEnemy + hEnemy){
     Xspeed = -Xspeed;
@@ -137,6 +141,7 @@ void Ball(){
     if(xWaarde < 0){
     xWaarde = width/2;
     yWaarde = height/2;
+    Xspeed = 9;
     EnemyScore++;
    }else if(xWaarde > xPlayer && xWaarde < xPlayer + wPlayer + 10 && yWaarde > yPlayer && yWaarde < yPlayer + hPlayer){
     Xspeed = -Xspeed;
@@ -154,7 +159,7 @@ void Ball(){
   Yspeed += Gravity;
   
 }
-
+//======================================
 void StartScreen(){
   
   if(start == true){
@@ -176,7 +181,7 @@ void StartScreen(){
   text("press space to start",((width / 2) - offset2),590);
   }
 }
-
+//======================================
 void EndScreen(){
   if(PlayerScore == maxScore || EnemyScore == maxScore){
     background(0,255,10);
